@@ -334,7 +334,7 @@ function StringToTable(inString, fromChat)
     success, deserialized = LibSerialize:Deserialize(decompressed)
   end
   if not(success) then
-    return L["Error deserializing"]
+    return L["Error deserializing"] .. (deserialized and (": " .. tostring(deserialized)) or "")
   end
   return deserialized
 end
@@ -502,19 +502,26 @@ function WeakAuras.Import(inData, target, callbackFunc, linkedAuras)
         {1, "WeakAuras", 0.5333, 0, 1},
         {1, received, 1, 0, 0, 1}
       }
+      WeakAuras.prettyPrint(L["Import failed"] .. ": " .. received)
       return nil, received
-    elseif received.m == "d" then
+    elseif type(received) == "table" and received.m == "d" then
       data = received.d
       children = received.c
-      version = received.v
+      version = received.v or 0
     end
-  elseif type(inData.d) == 'table' then
+  elseif type(inData) == "table" and type(inData.d) == 'table' then
     data = inData.d
     children = inData.c
-    version = inData.v
+    version = inData.v or 0
   end
   if type(data) ~= "table" then
-    return nil, "Invalid import data."
+    local errorMessage = "Invalid import data."
+    ShowTooltip{
+      {1, "WeakAuras", 0.5333, 0, 1},
+      {1, errorMessage, 1, 0, 0, 1}
+    }
+    WeakAuras.prettyPrint(L["Import failed"] .. ": " .. errorMessage)
+    return nil, errorMessage
   end
 
   local highestVersion = data.internalVersion or 0
@@ -688,5 +695,3 @@ end
 
 Comm:RegisterComm("WeakAurasProg", HandleProgressComm)
 Comm:RegisterComm("WeakAuras", HandleComm)
-
-

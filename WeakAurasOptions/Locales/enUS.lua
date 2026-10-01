@@ -863,6 +863,9 @@ It might not work correctly!]=]
 	L[ [=[This aura was created with a newer version of WeakAuras.
 Upgrade your version of WeakAuras or wait for next release before installing this aura.]=] ] = [=[This aura was created with a newer version of WeakAuras.
 Upgrade your version of WeakAuras or wait for next release before installing this aura.]=]
+	L["This aura uses a different or newer internal data format. It may require migration before it can be used."] = "This aura uses a different or newer internal data format. It may require migration before it can be used."
+	L["Import compatibility details: imported internal version %s, current version %s."] = "Import compatibility details: imported internal version %s, current version %s."
+	L["Import failed"] = "Import failed"
 	L["This display is currently loaded"] = "This display is currently loaded"
 	L["This display is not currently loaded"] = "This display is not currently loaded"
 	L["This display is on standby, it will be loaded when needed."] = "This display is on standby, it will be loaded when needed."
@@ -968,4 +971,3 @@ WeakAuras will always run custom grow code if you include 'changed' in this list
 	L["Z Rotation"] = "Z Rotation"
 	L["Zoom In"] = "Zoom In"
 	L["Zoom Out"] = "Zoom Out"
-

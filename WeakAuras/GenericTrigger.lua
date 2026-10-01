@@ -1062,9 +1062,9 @@ do
     Private.ActivateAuraEnvironment(nil)
     -- clear expired timers
     if delayTimerEvents[id] and delayTimerEvents[id][triggernum] then
-      for i, t in ipairs_reverse(delayTimerEvents[id][triggernum]) do
-        if t.ends <= GetTime() then
-          table.remove(delayTimerEvents[id][triggernum], i)
+          for i, t in ipairs_reverse(delayTimerEvents[id][triggernum]) do
+            if t.ends <= GetTime() then
+              table.remove(delayTimerEvents[id][triggernum], i)
         end
       end
     end

@@ -1411,16 +1411,17 @@ local methods = {
         local highestVersionWarning = AceGUI:Create("Label")
         highestVersionWarning:SetFontObject(GameFontHighlight)
         highestVersionWarning:SetFullWidth(true)
-        highestVersionWarning:SetText(L["This aura was created with a newer version of WeakAuras.\nUpgrade your version of WeakAuras or wait for next release before installing this aura."])
+        highestVersionWarning:SetText(
+          L["This aura uses a different or newer internal data format. It may require migration before it can be used."]
+          .. "\n\n"
+          .. L["Import compatibility details: imported internal version %s, current version %s."]:format(
+            highestVersion, WeakAuras.InternalVersion()
+          )
+        )
         highestVersionWarning:SetColor(1, 0, 0)
         self:AddChild(highestVersionWarning)
-        self.importButton:Hide()
-        self.viewCodeButton:Hide()
-        self:DoLayout()
-        return
-      else
-        self.importButton:Show()
       end
+      self.importButton:Show()
     end
 
     local matchInfoResult = AceGUI:Create("Label")
