@@ -13,8 +13,8 @@ local IsAddOnLoaded, LoadAddOn
   = IsAddOnLoaded, LoadAddOn
 local UnitName, GetRealmName, GetGuildInfo, UnitRace, UnitFactionGroup, UnitClass
   = UnitName, GetRealmName, GetGuildInfo, UnitRace, UnitFactionGroup, UnitClass
-local UnitIsPartyLeader, UnitIsRaidOfficer, GetRaidRosterInfo, UnitInRaid, UnitInParty
-  = UnitIsPartyLeader, UnitIsRaidOfficer, GetRaidRosterInfo, UnitInRaid, UnitInParty
+local UnitIsPartyLeader, GetRaidRosterInfo, UnitInRaid, UnitInParty
+  = UnitIsPartyLeader, GetRaidRosterInfo, UnitInRaid, UnitInParty
 local InCombatLockdown, UnitAffectingCombat, GetInstanceInfo, IsInInstance
   = InCombatLockdown, UnitAffectingCombat, GetInstanceInfo, IsInInstance
 local GetCurrentMapAreaID, GetRealZoneText, GetSubZoneText, SetMapToCurrentZone
@@ -1619,11 +1619,15 @@ local function scanForLoadsImpl(toCheck, event, arg1, ...)
 
   local raidMemberType = 0
 
-  if UnitIsPartyLeader("player") then
-    raidMemberType = raidMemberType + 1
-
-  elseif UnitIsRaidOfficer("player") then
-    raidMemberType = raidMemberType + 2
+  if raidID then
+    local raidRank = select(2, GetRaidRosterInfo(raidID + 1))
+    if raidRank == 2 then
+      raidMemberType = 1
+    elseif raidRank == 1 then
+      raidMemberType = 2
+    end
+  elseif UnitIsPartyLeader("player") then
+    raidMemberType = 1
   end
 
   local size, difficulty = GetInstanceTypeAndSize()
